@@ -6,13 +6,16 @@ import time
 programa = "Vida Digna"
 hoy = str(datetime.now().date())
 
-key = '1ki6jAFYcOkS3OGp4fWotqouVOJQki6AwlL7rin4xBXk'
-hoja = 'Sheet'
+key = '1KpXu1rtMftOgpV4h37pUCMgu5rRrwz0IKKUpjK5wPcc'
+hoja = 'Sheet1'
 url = 'https://docs.google.com/spreadsheets/d/{}/gviz/tq?tqx=out:csv&sheet={}'.format(key,hoja)
-df_respuestas = pd.read_csv(url, usecols =['Quien','Dni','Contacto','Mensajes','Apellido, Nombres','Atajo','Respuesta frecuente'])
+#df_respuestas = pd.read_csv(url, usecols =['Quien','Dni','Contacto','Mensajes','Apellido, Nombres','Atajo','Respuesta Frecuente'])
 
-#df_respuestas = pd.read_excel(r'D:\DESARROLLO\PANDAS_CRUCES\PARSEO VIDA DIGNA 11-1-21.xlsx')
-df_respuestas = df_respuestas[df_respuestas['Atajo'].notnull() | df_respuestas['Atajo'] !='YA RESUELTA']
+
+df_respuestas = pd.read_excel(r'C:\Users\Administrador\Desktop\VIDA_DIGNA_parseo_15_prioritarios.xlsx')
+print(df_respuestas)
+
+df_respuestas = df_respuestas[df_respuestas['Atajo'].notnull()]
 
 print(df_respuestas['Atajo'].value_counts())
 
@@ -25,7 +28,7 @@ df_respuestas['PROGRAMA'] = programa
 
 print(df_respuestas.columns)
 
-df_rb = df_respuestas.loc[:,['estado','Contacto','Apellido, Nombres','Respuesta frecuente','adjunto', 'Dni']]
+df_rb = df_respuestas.loc[:,['estado','Contacto','Apellido, Nombres','Respuesta Frecuente','adjunto', 'Dni']]
 df_rb.to_excel("RB" + programa + hoy + ".xlsx", index = False) 
 
 

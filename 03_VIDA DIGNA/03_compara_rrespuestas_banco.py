@@ -26,26 +26,6 @@ for filename in archivos_banco:
 	lista_data.append(df_archivos_banco)
 df_respuesta_banco = pd.concat(lista_data, ignore_index=True)
 df_respuesta_banco['CUIT'] = df_respuesta_banco['CUIT'].str.slice(start = - 11)
-print(df_respuesta_banco)
-
-archivo_cbu_posibles = r"D:\01 - Ministerio de Empleo\vida digna\PAGO FIN DE AÑO\VIDA DIGNA Salidas Capital-interior.xlsx"
-archivo_total = r'D:\01 - Ministerio de Empleo\vida digna\SEGUNDAS CUOTAS A PAGAR VIDA DIGNA TOTAL.xlsx'
-
-
-df_benef = pd.read_excel(archivo_total, usecols=['APELLIDOS', 'NOMBRES', 'CUIT'], na_values= ['null'], converters={'CUIT':str})
-df_benef = df_benef[df_benef['CUIT'].notnull()]
-
-
-#CARGA EL ARCHIVO CON DATOS DE CBU
-df_cbu_posible = pd.read_excel(archivo_cbu_posibles, "CBU_PESOS", index_col=None, na_values=["NA"], usecols =['CUIT','PRODUCTO','EST_ACT','Nro_CBU'], converters={'CUIT':str})
-df_cbu_posible = df_cbu_posible[df_cbu_posible['PRODUCTO'].notnull()]
-
-df = df_benef.merge(df_cbu, how="left")
-df_benef_cbu_posibles = df.merge(df_cbu_posible, how="left")
-
-
-resultado = df_benef_cbu_posibles.merge(df_respuesta_banco, how="left")
-resultado.to_excel("VIDA_DIGNA-CBU" + hoy + ".xlsx", index = False)
 
 
 

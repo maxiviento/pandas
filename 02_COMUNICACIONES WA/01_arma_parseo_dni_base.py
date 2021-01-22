@@ -3,7 +3,7 @@ from openpyxl import load_workbook
 from pandas import DataFrame
 
 
-df_consultas = pd.read_excel(r'parseo_unidos_14.xlsx', converters={'Dni':str})
+df_consultas = pd.read_excel(r'C:\Users\Administrador\Documents\lecturas_chats_yudi\_mensajes_2021-01-21091124.xlsx', converters={'Dni':str})
 #df_benef = pd.read_excel(r'LISTADO SEGUNDAS CUOTAS CAPITAL e INTERIOR.xlsx', usecols =['Dni','NOMBRES','APELLIDOS','REPORTE DE LLAMADO'], converters={'Dni':str})
 
 
@@ -23,6 +23,7 @@ df = df_consultas.merge(df_benef, how="left")
 #CONCATENO APELLIDO Y NOMBRE
 df['Apellido, Nombres'] = df['APELLIDOS'] + ', ' + df['NOMBRES']
 df['Quien'] = ""
+df['Númerofill'] = df['Número'].fillna(method = 'ffill')
 
 #ARMO LAS COLUMNA QUE DESEO A LA SALIDA
 df = df.loc[:,['Quien','Númerofill', 'Número','Fecha, hora','Contacto','Mensajes','Dni', 'Apellido, Nombres', 'REPORTE DE LLAMADO']]
@@ -43,5 +44,5 @@ df_prioritarios_FINAL = df_final[df_final['estado'] == 'prioritarios']
 df_noEnBase = df_final[df_final['estado'] != 'prioritarios']
 
 
-df_prioritarios_FINAL.to_excel("parseo_14_prioritarios.xlsx", index=False)
-df_noEnBase.to_excel("parseo_14_noEnBase.xlsx", index=False)
+df_prioritarios_FINAL.to_excel("parseo_21_prioritarios.xlsx", index=False)
+df_noEnBase.to_excel("parseo_21_noEnBase.xlsx", index=False)
